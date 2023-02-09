@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import Preview from "./components/Preview";
+
 const getNiceName = (type: string) => {
   switch (type) {
     case "text/plain":
@@ -16,6 +18,8 @@ const getNiceName = (type: string) => {
       return "Tab-Separated Values";
     case "application/x-slate-fragment":
       return "Slate Fragment";
+    case "application/x-opvia-table-data":
+      return "Opvia Table Data";
     case "vscode-editor-data":
       return "Visual Studio Code";
   }
@@ -52,9 +56,11 @@ function App() {
                   <b>{type}</b>
                 </h1>
               )}
-              <div className="max-w-full font-mono whitespace-pre-wrap break-all">
-                {dataTransfer.getData(type)}
-              </div>
+              <Preview
+                key={type}
+                type={type}
+                data={dataTransfer.getData(type)}
+              />
             </div>
           );
         })}
